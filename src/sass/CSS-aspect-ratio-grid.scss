@@ -1,0 +1,134 @@
+/*!@license Copyright (c) 2015 Cesar Candela
+* www.cssguy4hire.com 
+*/
+
+// DEFAULT FUNCTIONS AND MIXNINS
+@import 'functions';
+@import 'mixins';
+
+// setup
+@import 'setup';
+
+// DEFAULT STYLES
+@import 'default';
+
+// LAYOUT
+@import 'layout';
+
+/*////////////////////////////////*/
+/*////////////ELEMENTS////////////*/
+/*////////////////////////////////*/
+
+// HEADER
+@import 'header';
+
+// FOOTER
+@import 'footer';
+
+
+/*aspect ratio grid*/
+
+// set aspect ratio
+// change this in order to get a responsive grid
+// nevertheless, contained images should have these proportions
+$aspectRatio: 4 3;
+
+@function setARatio($aspectRatio) {
+    $ratio: (nth($aspectRatio, 2) / nth($aspectRatio, 1)) * 100%;
+
+    @return $ratio;
+}
+
+$gridSize: 50%;
+
+
+#imgMain {
+    padding-bottom: setARatio($aspectRatio);
+    width: 100%;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    background-color: #00f00f;
+
+    figure {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+    }
+
+}
+
+#imgGrid {
+    top: 0;
+    right: -($gridSize);
+    width: $gridSize;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    overflow: hidden;
+    background-color: #13a2e4;
+
+    figure {
+        width: 50%;
+        height: 0;
+        padding-bottom: setARatio($aspectRatio) / 2;
+        position: relative;
+        float: left;
+        background-color: #000000;
+
+        // correcting generated gaps due to percentage rounding value (mostly on webkit)
+        transform: scale(1.015);
+        transform-origin: left top;
+
+        &:nth-child(odd) {
+            background-color: #e7e7e7;
+        }
+
+        img {
+            // correcting generated gaps due to percentage rounding value (mostly on webkit)
+            transform: scale(1.015);
+        }
+    }
+}
+
+
+// layout
+// the purpose of this is just to give the example a containing area
+#main {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    #drawArea {
+
+        $scaleFactor: 1.5;
+
+        margin: 0;
+        padding-bottom: setARatio($aspectRatio) / $scaleFactor;
+        width: 100% / $scaleFactor;
+        height: 0;
+        display: block;
+        position: relative;
+    }
+
+}
+
+
+
+
+
+
+
+
+
