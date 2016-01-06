@@ -12,6 +12,8 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'),
     copy = require('gulp-copy'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),   
     jpegRecompress = require('imagemin-jpeg-recompress'),   
     clean = require('gulp-clean'),
     cache = require('gulp-cache'),
@@ -65,7 +67,8 @@ gulp.task('compass', function () {
 // file Changes
 gulp.task('fileChange', function () {
     return gulp.src([
-            'src/*.htm'
+            'src/*.htm',
+            'src/js/*.js'
         ])
     
         //browserSync
@@ -77,6 +80,16 @@ gulp.task('fileChange', function () {
 });
 
 // concat files
+gulp.task('concat', function() {
+
+    var defaultAssets = gulp.src([
+            'src/js/jquery.js'
+        ], {base: 'js/'})
+        .pipe(concat('defaultAssets.js', {newLine: ';'}))
+        .pipe(gulp.dest('src/js/'))
+    ;
+
+});
 
 // browserSync
 gulp.task('browserSync', function() {
@@ -89,11 +102,12 @@ gulp.task('browserSync', function() {
 });
 
 // watch
-gulp.task('watch', ['browserSync', 'compass'], function (){
+gulp.task('watch', ['browserSync', 'compass', 'concat'], function (){
     gulp.watch([
-        'src/*.htm'
+        'src/*.htm',
+        'src/js/*.js'
     ], ['fileChange']);
-    gulp.watch('src/sass/*.scss', ['compass']);
+    gulp.watch('src/sass/*.scss', ['compass'], 'concat');
 });
 
 // default task
@@ -111,7 +125,8 @@ gulp.task('default', function (callback) {
 // clean dist
 gulp.task('clean_dist', function () {
     return gulp.src([
-            'dist/css/'
+            'dist/css/',
+            'dist/js/'
         ], {read: false})
         .pipe(clean())
     ;
@@ -137,16 +152,16 @@ gulp.task('copy_dist', function() {
         .pipe(gulp.dest('dist/img/'))
     ;
 
-    // var copyJS = gulp.src([
-    //         'src/js/defaultAssets.js',
-    //         'src/js/' + projectName + '.js'
-    //     ], {base: ''})
+    var copyJS = gulp.src([
+            'src/js/defaultAssets.js',
+            'src/js/' + projectName + '.js'
+        ], {base: ''})
 
-    //     //copy files
-    //     .pipe(gulp.dest('dist/js/'))
-    // ;
+        //copy files
+        .pipe(gulp.dest('dist/js/'))
+    ;
 
-    return merge(copyHTML, copyIMG/*, copyJS*/);
+    return merge(copyHTML, copyIMG, copyJS);
 
 });
 
@@ -176,7 +191,26 @@ gulp.task('compass_dist', function () {
 
 
 // js dist
+gulp.task('jsmin_dist', function () {
 
+    return gulp.src('dist/js/*.js')
+        .pipe(uglify({
+            compress: {
+                sequences: true,
+                dead_code: true,
+                conditionals: true,
+                booleans: true,
+                unused: true,
+                if_return: true,
+                join_vars: true,
+                drop_console: true
+            },
+            preserveComments : 'license'
+        }))
+        .pipe(gulp.dest('dist/js'))
+    ;
+
+});
 
 // clear cache
 gulp.task('clearCache', function (done) {
@@ -222,7 +256,7 @@ gulp.task('dist', function(callback) {
         'clean_dist',
         'copy_dist',
         'compass_dist',
-        // 'jsmin_dist',
+        'jsmin_dist',
         'imgmin_dist', 
         callback
     );

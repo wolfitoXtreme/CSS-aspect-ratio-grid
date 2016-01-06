@@ -461,7 +461,6 @@ img {
   font-size: 0;
   line-height: 0;
   position: absolute;
-  background-color: #00f00f;
 }
 #imgMain figure {
   left: 0;
@@ -486,7 +485,6 @@ img {
   position: absolute;
   z-index: 10;
   overflow: hidden;
-  background-color: #13a2e4;
 }
 #imgGrid figure {
   width: 50%;
@@ -494,14 +492,10 @@ img {
   padding-bottom: 37.5%;
   position: relative;
   float: left;
-  background-color: #000000;
   -webkit-transform: scale(1.015);
           transform: scale(1.015);
   -webkit-transform-origin: left top;
           transform-origin: left top;
-}
-#imgGrid figure:nth-child(odd) {
-  background-color: #e7e7e7;
 }
 #imgGrid figure img {
   -webkit-transform: scale(1.015);
@@ -520,4 +514,48 @@ img {
   height: 0;
   display: block;
   position: relative;
+}
+
+#main #drawArea.noGrid {
+  padding: 0;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+#main #drawArea.noGrid #imgMain {
+  padding: 0;
+  height: auto;
+  width: auto;
+  display: inline-block;
+  position: relative;
+}
+#main #drawArea.noGrid #imgMain figure {
+  padding: 0;
+  width: auto;
+  height: auto;
+  position: relative;
+  display: inline-block;
+}
+#main #drawArea.noGrid #imgMain img {
+  width: 100px;
+  height: auto;
+  position: relative;
+  display: inline-block;
+}
+#main #drawArea.noGrid #imgMain #imgGrid {
+  right: auto;
+  height: auto;
+  width: auto;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+}
+#main #drawArea.noGrid #imgMain #imgGrid figure {
+  -webkit-transform: none;
+          transform: none;
+  float: none;
+}
+#main #drawArea.noGrid #imgMain #imgGrid figure img {
+  -webkit-transform: none;
+          transform: none;
 }

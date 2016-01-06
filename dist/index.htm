@@ -21,6 +21,8 @@
     <!-- screen styles -->
 
     <!-- scripts -->
+    <script type="text/javascript" src="js/defaultAssets.js"></script>
+    <script type="text/javascript" src="js/CSS-aspect-ratio-grid.js"></script>
     <!-- scripts -->
 
 </head>
@@ -49,7 +51,7 @@
         <!--====== MAIN ======-->        
         <main id="main">
 
-            <div id="drawArea">
+            <div id="drawArea" class="noGrid">
 
                 <div id="imgMain">
 
@@ -101,8 +103,10 @@
             <div class="tester">
 
                 <p>
-                squeeze the window/rotate your device, so you can see the grid changing size and keeping the desired aspect ratio, in this case 4:3.
+                Enable/disable the grid, when enabled, squeeze the window/rotate your device, so you can see the grid changing size and keeping the desired aspect ratio, in this case 4:3.
                 </p>
+
+                <a href="#" id="removeGrid" class="submitButton" data-text="disable grid"><span>enable grid</span></a>
             
             </div>
 
